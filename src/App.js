@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+import "./App.css";
+import DropdownSelect from "./components/DropdownSelect";
+
+const options = [
+  { value: "red", label: "Red" },
+  { value: "green", label: "Green" },
+  { value: "blue", label: "Blue" },
+  { value: "purple", label: "Purple" },
+  { value: "pink", label: "Pink" },
+  { value: "yellow", label: "Yellow" },
+  { value: "orange", label: "Orange" },
+];
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [value, setValue] = useState(null);
+
+  const handleChange = (selectedValue) => {
+    if (isOpen) {
+      setValue(selectedValue === value ? null : selectedValue);
+    }
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DropdownSelect
+      label="Select a color"
+      options={options}
+      value={value}
+      open={isOpen}
+      onChange={handleChange}
+      isSearchable
+    />
   );
 }
 
